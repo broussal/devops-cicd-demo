@@ -1,0 +1,9 @@
+stages:
+  - test
+
+hello:
+  stage: test
+  image: alpine
+  script:
+    - echo "Le pipeline fonctionne"
+    - uname -a
