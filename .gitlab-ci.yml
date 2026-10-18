@@ -1,9 +1,11 @@
 stages:
-  - test
+  - build
 
-hello:
-  stage: test
-  image: alpine
+build-image:
+  stage: build
+  image: docker
+  services:
+    - docker:dind
   script:
-    - echo "Le pipeline fonctionne"
-    - uname -a
+    - docker build -t compteur-api .
+    - docker images
