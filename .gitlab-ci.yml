@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
 
 build-image:
   stage: build
@@ -11,3 +12,16 @@ build-image:
   script:
     - docker build -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+
+test-api:
+  stage: test
+  image: docker
+  services:
+    - docker:dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  script:
+    - docker network create test
+    - docker run -d --name redis --network test redis
+    - docker run -d --name api --network test -e REDIS_HOST=redis "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    - docker run --rm --network test curlimages/curl -sf --retry 5 --retry-connrefused --retry-delay 2 http://api:8000/
