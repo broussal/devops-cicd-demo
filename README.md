@@ -7,9 +7,9 @@ L'application est volontairement simple — un compteur de visites — pour se c
 ## Architecture
 
 ```
-            ┌──────────── Kubernetes (kind) ────────────┐
-requête ──▶ │ Service "api" ──▶ 3 Pods API ──▶ Service "redis" ──▶ Pod Redis │
-            └───────────────────────────────────────────┘
+            ┌──────────── Kubernetes (kind) ─────────────────────────────────┐
+requête ──> │ Service "api" ──> 3 Pods API ──> Service "redis" ──> Pod Redis │
+            └────────────────────────────────────────────────────────────────┘
 ```
 
 - **API** : Flask, servie par gunicorn. `/` incrémente le compteur, `/health` sert aux sondes.
