@@ -23,7 +23,7 @@ Python · Flask · Redis · Docker · Docker Compose · GitLab CI · Kubernetes 
 
 ```
 .
-├── app.py             # l'API
+├── app/main.py        # l'API
 ├── requirements.txt   # dépendances Python
 ├── Dockerfile         # construction de l'image
 ├── compose.yaml       # lancement local avec Docker Compose
